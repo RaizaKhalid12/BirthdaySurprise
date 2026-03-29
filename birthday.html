@@ -3,155 +3,224 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Birthday! 🎂</title>
+    <title>Happy Birthday! 🎂💙</title>
     <style>
+        :root {
+            --main-blue: #4dabf7;
+            --dark-blue: #1971c2;
+            --light-blue: #e7f5ff;
+            --cake-color: #fff4e6;
+        }
+
         body {
-            background-color: #ffeef8;
+            background-color: var(--light-blue);
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Arial Rounded MT Bold', 'Helvetica', sans-serif;
             overflow: hidden;
+            cursor: pointer;
         }
 
         .container {
             text-align: center;
+            z-index: 2;
         }
 
         h1 {
-            color: #ff69b4;
-            text-shadow: 2px 2px #fff;
-            font-size: 3rem;
-            margin-bottom: 20px;
-            animation: bounce 2s infinite;
+            color: var(--dark-blue);
+            font-size: 3.5rem;
+            margin-bottom: 30px;
+            animation: float 3s ease-in-out infinite;
+            text-shadow: 3px 3px 0px white;
         }
 
-        /* --- THE CAKE --- */
+        /* --- THE ANIMATED CAKE --- */
+        .cake-group {
+            position: relative;
+            width: 250px;
+            margin: 0 auto;
+            animation: hover 4s ease-in-out infinite;
+        }
+
         .cake {
             position: relative;
             width: 250px;
-            height: 200px;
-            margin: 0 auto;
+            height: 120px;
+            background: var(--cake-color);
+            border-radius: 120px / 40px;
+            box-shadow: 0 10px 0 #eedbb0;
         }
 
-        .layer {
+        .cake::before {
+            content: "";
             position: absolute;
-            display: block;
+            top: 20px;
+            left: 0;
             width: 250px;
             height: 100px;
-            bottom: 0;
-            background: #f4d03f; /* Yellow cake */
-            border-radius: 50% / 20%;
-            box-shadow: 0 10px 0 #e5c130;
+            background: var(--cake-color);
+            border-radius: 50%;
+            z-index: -1;
         }
 
         .icing {
             position: absolute;
-            top: -10px;
-            left: 0;
+            top: -5px;
             width: 250px;
-            height: 50px;
-            background: #ff85a2; /* Pink icing */
+            height: 60px;
+            background: var(--main-blue);
             border-radius: 50%;
+            border-bottom: 5px solid var(--dark-blue);
         }
 
-        .drip {
-            position: absolute;
-            top: 25px;
-            left: 10px;
-            width: 20px;
-            height: 40px;
-            background: #ff85a2;
-            border-radius: 20px;
-            box-shadow: 40px 5px 0 #ff85a2, 80px -5px 0 #ff85a2, 120px 10px 0 #ff85a2, 160px 0px 0 #ff85a2, 200px 5px 0 #ff85a2;
-        }
-
-        /* --- THE CANDLE --- */
+        /* --- INTERACTIVE CANDLE --- */
         .candle {
             position: absolute;
-            background-color: #7c4dff;
-            width: 16px;
-            height: 50px;
+            background: linear-gradient(to bottom, #74c0fc, #228be6);
+            width: 12px;
+            height: 45px;
             top: -40px;
             left: 50%;
-            margin-left: -8px;
-            border-radius: 8px / 4px;
+            transform: translateX(-50%);
+            border-radius: 4px;
+            cursor: pointer;
         }
 
         .flame {
             position: absolute;
-            background-color: orange;
+            background: #ffec99;
             width: 15px;
             height: 25px;
             border-radius: 50% 50% 20% 20%;
             top: -25px;
             left: 50%;
-            margin-left: -7.5px;
-            box-shadow: 0 0 10px rgba(255, 165, 0, 0.5);
-            animation: flicker 0.6s infinite alternate;
+            transform: translateX(-50%);
+            box-shadow: 0 0 15px #ffd43b;
+            animation: flicker 0.1s infinite alternate;
         }
 
-        /* --- DECORATIONS --- */
-        .heart {
+        .flame.out {
+            display: none;
+        }
+
+        /* --- DECORATIONS & ANIMS --- */
+        .star {
             position: absolute;
-            color: #ff69b4;
+            color: var(--main-blue);
             font-size: 20px;
-            animation: float 4s infinite linear;
-            opacity: 0;
+            pointer-events: none;
         }
 
         @keyframes flicker {
-            0% { transform: scale(1); opacity: 0.9; }
-            100% { transform: scale(1.1); opacity: 1; }
+            from { transform: translateX(-50%) scale(1); }
+            to { transform: translateX(-50%) scale(1.1) rotate(2deg); }
         }
 
-        @keyframes bounce {
+        @keyframes hover {
             0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
+            50% { transform: translateY(-20px); }
         }
 
         @keyframes float {
-            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .instruction {
+            margin-top: 40px;
+            color: var(--dark-blue);
+            font-size: 1.2rem;
+            opacity: 0.7;
         }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <h1>Happy Birthday! ✨</h1>
-        <div class="cake">
-            <div class="candle">
-                <div class="flame"></div>
+        <h1 id="wish-text">Make a Wish! ✨</h1>
+        
+        <div class="cake-group">
+            <div class="candle" onclick="blowOut()">
+                <div class="flame" id="flame"></div>
             </div>
-            <div class="layer">
+            <div class="cake">
                 <div class="icing"></div>
-                <div class="drip"></div>
             </div>
         </div>
-        <p style="color: #ff85a2; font-weight: bold; margin-top: 20px;">
-            Wishing you the sweetest day ever! 🍓
-        </p>
+
+        <p class="instruction">Click the candle to blow it out!</p>
     </div>
 
     <script>
-        // Let's add some floating hearts!
-        function createHeart() {
-            const heart = document.createElement('div');
-            heart.classList.add('heart');
-            heart.innerHTML = '❤️';
-            heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.animationDuration = Math.random() * 2 + 3 + 's';
-            document.body.appendChild(heart);
-
-            setTimeout(() => {
-                heart.remove();
-            }, 5000);
+        // Blow out candle and start confetti
+        function blowOut() {
+            const flame = document.getElementById('flame');
+            const wish = document.getElementById('wish-text');
+            
+            if (!flame.classList.contains('out')) {
+                flame.classList.add('out');
+                wish.innerHTML = "HAPPY BIRTHDAY! 🥳💙";
+                wish.style.color = "#1971c2";
+                
+                // Trigger blue confetti burst
+                for(let i = 0; i < 50; i++) {
+                    createPop();
+                }
+            }
         }
 
-        setInterval(createHeart, 300);
+        // Floating background stars
+        function createStar() {
+            const star = document.createElement('div');
+            star.classList.add('star');
+            star.innerHTML = '✦';
+            star.style.left = Math.random() * 100 + 'vw';
+            star.style.top = '110vh';
+            
+            const duration = Math.random() * 3 + 2;
+            star.style.transition = `transform ${duration}s linear, opacity ${duration}s`;
+            
+            document.body.appendChild(star);
+
+            setTimeout(() => {
+                star.style.transform = `translateY(-120vh) rotate(${Math.random() * 360}deg)`;
+            }, 10);
+
+            setTimeout(() => { star.remove(); }, duration * 1000);
+        }
+
+        // Confetti effect
+        function createPop() {
+            const p = document.createElement('div');
+            p.style.position = 'fixed';
+            p.style.left = '50%';
+            p.style.top = '40%';
+            p.style.width = '10px';
+            p.style.height = '10px';
+            p.style.backgroundColor = ['#339af0', '#74c0fc', '#1864ab', '#d0ebff'][Math.floor(Math.random()*4)];
+            p.style.borderRadius = '50%';
+            p.style.zIndex = '10';
+            document.body.appendChild(p);
+
+            const destinationX = (Math.random() - 0.5) * 600;
+            const destinationY = (Math.random() - 0.5) * 600;
+
+            const animation = p.animate([
+                { transform: 'translate(0, 0) scale(1)', opacity: 1 },
+                { transform: `translate(${destinationX}px, ${destinationY}px) scale(0)`, opacity: 0 }
+            ], {
+                duration: 1000 + Math.random() * 1000,
+                easing: 'cubic-bezier(0, .9, .57, 1)',
+                fill: 'forwards'
+            });
+
+            animation.onfinish = () => p.remove();
+        }
+
+        setInterval(createStar, 400);
     </script>
 </body>
 </html>
