@@ -1,76 +1,157 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>🎉 Birthday Surprise! 🎂</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Courier New', monospace;
-      background: linear-gradient(to bottom, #a0e7e5, #b4f8c8);
-      overflow: hidden;
-      text-align: center;
-      padding: 50px;
-    }
-    h1 {
-      color: #ff6f91;
-      font-size: 2.5em;
-      margin-bottom: 20px;
-    }
-    p {
-      font-size: 1.2em;
-      color: #333;
-    }
-    button {
-      background-color: #ffcbf2;
-      border: none;
-      padding: 15px 30px;
-      margin-top: 30px;
-      font-size: 1.2em;
-      border-radius: 12px;
-      cursor: pointer;
-      box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
-      transition: transform 0.2s;
-    }
-    button:hover {
-      transform: scale(1.1);
-    }
-    .balloon {
-      position: absolute;
-      width: 50px;
-      height: 70px;
-      background: radial-gradient(circle at 50% 30%, #ff6f91, #ff3cac);
-      border-radius: 50% 50% 50% 50%;
-      animation: float 6s ease-in infinite;
-    }
-    @keyframes float {
-      0% {transform: translateY(0px) rotate(0deg);}
-      50% {transform: translateY(-600px) rotate(20deg);}
-      100% {transform: translateY(0px) rotate(0deg);}
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday! 🎂</title>
+    <style>
+        body {
+            background-color: #ffeef8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        h1 {
+            color: #ff69b4;
+            text-shadow: 2px 2px #fff;
+            font-size: 3rem;
+            margin-bottom: 20px;
+            animation: bounce 2s infinite;
+        }
+
+        /* --- THE CAKE --- */
+        .cake {
+            position: relative;
+            width: 250px;
+            height: 200px;
+            margin: 0 auto;
+        }
+
+        .layer {
+            position: absolute;
+            display: block;
+            width: 250px;
+            height: 100px;
+            bottom: 0;
+            background: #f4d03f; /* Yellow cake */
+            border-radius: 50% / 20%;
+            box-shadow: 0 10px 0 #e5c130;
+        }
+
+        .icing {
+            position: absolute;
+            top: -10px;
+            left: 0;
+            width: 250px;
+            height: 50px;
+            background: #ff85a2; /* Pink icing */
+            border-radius: 50%;
+        }
+
+        .drip {
+            position: absolute;
+            top: 25px;
+            left: 10px;
+            width: 20px;
+            height: 40px;
+            background: #ff85a2;
+            border-radius: 20px;
+            box-shadow: 40px 5px 0 #ff85a2, 80px -5px 0 #ff85a2, 120px 10px 0 #ff85a2, 160px 0px 0 #ff85a2, 200px 5px 0 #ff85a2;
+        }
+
+        /* --- THE CANDLE --- */
+        .candle {
+            position: absolute;
+            background-color: #7c4dff;
+            width: 16px;
+            height: 50px;
+            top: -40px;
+            left: 50%;
+            margin-left: -8px;
+            border-radius: 8px / 4px;
+        }
+
+        .flame {
+            position: absolute;
+            background-color: orange;
+            width: 15px;
+            height: 25px;
+            border-radius: 50% 50% 20% 20%;
+            top: -25px;
+            left: 50%;
+            margin-left: -7.5px;
+            box-shadow: 0 0 10px rgba(255, 165, 0, 0.5);
+            animation: flicker 0.6s infinite alternate;
+        }
+
+        /* --- DECORATIONS --- */
+        .heart {
+            position: absolute;
+            color: #ff69b4;
+            font-size: 20px;
+            animation: float 4s infinite linear;
+            opacity: 0;
+        }
+
+        @keyframes flicker {
+            0% { transform: scale(1); opacity: 0.9; }
+            100% { transform: scale(1.1); opacity: 1; }
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+        }
+    </style>
 </head>
 <body>
 
-  <h1>// Happy Birthday! 🎉💖</h1>
-  <p>Click the button below for a magical surprise 🪄✨</p>
+    <div class="container">
+        <h1>Happy Birthday! ✨</h1>
+        <div class="cake">
+            <div class="candle">
+                <div class="flame"></div>
+            </div>
+            <div class="layer">
+                <div class="icing"></div>
+                <div class="drip"></div>
+            </div>
+        </div>
+        <p style="color: #ff85a2; font-weight: bold; margin-top: 20px;">
+            Wishing you the sweetest day ever! 🍓
+        </p>
+    </div>
 
-  <button onclick="birthdayMagic()">Run Birthday Code 🎂</button>
+    <script>
+        // Let's add some floating hearts!
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = Math.random() * 2 + 3 + 's';
+            document.body.appendChild(heart);
 
-  <!-- Balloons -->
-  <div class="balloon" style="left:10%; animation-delay: 0s;"></div>
-  <div class="balloon" style="left:30%; animation-delay: 2s;"></div>
-  <div class="balloon" style="left:50%; animation-delay: 1s;"></div>
-  <div class="balloon" style="left:70%; animation-delay: 3s;"></div>
-  <div class="balloon" style="left:90%; animation-delay: 0.5s;"></div>
+            setTimeout(() => {
+                heart.remove();
+            }, 5000);
+        }
 
-  <script>
-    function birthdayMagic() {
-      let hugs = 1000;
-      let smiles = 9999;
-      let love = '💖'.repeat(20);
-      alert(`🎉 Happy Birthday!!! 🎉\n\nHugs: ${hugs}\nSmiles: ${smiles}\n\n${love}\n\nHave the best day ever! 😄`);
-    }
-  </script>
+        setInterval(createHeart, 300);
+    </script>
 </body>
 </html>
